@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if program.title_en %}{{ program.title_en }}{% else %}{{ program.title }}{% endif %} - सशक्त युवा समाज
+{% endblock %}
+
+{% block body %}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+
+<section class="section-padding detail-view">
+    <div class="container">
+        <div style="margin-bottom: 30px;">
+            <a href="/#programs" class="lang-switch-btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                <i class="fas fa-arrow-left"></i>
+                <span class="trans-txt" data-ne="फर्कनुहोस्" data-en="Back to Programs">फर्कनुहोस्</span>
+            </a>
+        </div>
+
+        <div class="section-header" style="text-align: left; margin-bottom: 40px; border-left: 5px solid var(--primary); padding-left: 25px;">
+            <h2 class="main-heading db-trans" 
+                data-ne="{{ program.title }}" 
+                data-en="{{ program.title_en|default:program.title }}"
+                style="margin: 0; line-height: 1.2;">
+                {{ program.title }}
+            </h2>
+            
+            <div class="info-meta">
+                <div class="meta-item">
+                    <i class="fas fa-calendar-alt"></i> {{ program.date }}
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="db-trans" data-ne="{{ program.location }}" data-en="{{ program.location_en|default:program.location }}">{{ program.location }}</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-user-tie"></i>
+                    <span class="db-trans" data-ne="अतिथि: {{ program.guests }}" data-en="Guests: {{ program.guests_en|default:program.guests }}">अतिथि: {{ program.guests }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="program-description-full" style="margin-bottom: 60px; width: 100%;">
+            <div class="db-trans" style="font-size: 1.1rem; color: var(--text); overflow-wrap: break-word; word-wrap: break-word;"
+                data-ne="{{ program.description }}" 
+                data-en="{{ program.description_en|default:program.description }}">
+                {{ program.description|linebreaks }}
+            </div>
+        </div>
+
+        <div class="gallery-section" style="margin-bottom: 80px;">
+            <div class="section-header" style="text-align: left; margin-bottom: 25px;">
+                <span class="sub-heading trans-txt" data-ne="तस्बिरहरू" data-en="Photo Gallery">तस्बिरहरू</span>
+                <h3 class="trans-txt" data-ne="कार्यक्रमको झलक" data-en="Event Highlights" style="color: var(--dark); font-size: 2rem; font-weight: 800;">कार्यक्रमको झलक</h3>
+            </div>
+            
+            <div class="gallery-grid">
+                {% if program.photo_1 %}
+                <a href="{{ program.photo_1.url }}" data-lightbox="program-gallery" data-title="{{ program.title }}">
+                    <img src="{{ program.photo_1.url }}" class="gallery-img" alt="Photo 1">
+                </a>
+                {% endif %}
+
+                {% if program.photo_2 %}
+                <a href="{{ program.photo_2.url }}" data-lightbox="program-gallery" data-title="{{ program.title }}">
+                    <img src="{{ program.photo_2.url }}" class="gallery-img" alt="Photo 2">
+                </a>
+                {% endif %}
+
+                {% if program.photo_3 %}
+                <a href="{{ program.photo_3.url }}" data-lightbox="program-gallery" data-title="{{ program.title }}">
+                    <img src="{{ program.photo_3.url }}" class="gallery-img" alt="Photo 3">
+                </a>
+                {% endif %}
+                
+                {% if not program.photo_1 and not program.photo_2 and not program.photo_3 %}
+                    <p class="trans-txt" data-ne="कुनै तस्बिर उपलब्ध छैन" data-en="No photos available">कुनै तस्बिर उपलब्ध छैन</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="video-section">
+            <div class="section-header" style="text-align: left; margin-bottom: 25px;">
+                <span class="sub-heading trans-txt" data-ne="भिडियोहरू" data-en="Media Clips">भिडियोहरू</span>
+                <h3 class="trans-txt" data-ne="भिडियो रिपोर्ट" data-en="Video Reports" style="color: var(--dark); font-size: 2rem; font-weight: 800;">भिडियो रिपोर्ट</h3>
+            </div>
+            
+            <div class="video-container-grid">
+                {% if program.video_1 %}
+                <div class="video-card">
+                    <video controls preload="metadata" playsinline><source src="{{ program.video_1.url }}" type="video/mp4"></video>
+                    <div class="caption">Clip 01</div>
+                </div>
+                {% endif %}
+                {% if program.video_2 %}
+                <div class="video-card">
+                    <video controls preload="metadata" playsinline><source src="{{ program.video_2.url }}" type="video/mp4"></video>
+                    <div class="caption">Clip 02</div>
+                </div>
+                {% endif %}
+                {% if program.video_3 %}
+                <div class="video-card">
+                    <video controls preload="metadata" playsinline><source src="{{ program.video_3.url }}" type="video/mp4"></video>
+                    <div class="caption">Clip 03</div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedLang = localStorage.getItem('preferredLang') || 'ne';
+        if (typeof applyLanguage === 'function') {
+            applyLanguage(savedLang);
+        }
+    });
+</script>
+{% endblock body %}

@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<style>
+    .hero {
+        background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), 
+                    url("{% if cover %}{{ cover.image.url }}{% else %}{% static 'images/home.png' %}{% endif %}") 
+                    center/cover no-repeat fixed !important;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+    }
+
+    .program-card-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        cursor: pointer;
+    }
+
+    .program-card-link:hover .program-card {
+        transform: translateY(-10px);
+        border-color: var(--primary);
+        box-shadow: var(--shadow);
+    }
+</style>
+
+<div class="home-wrapper">
+    <section id="home" class="hero">
+        <div class="hero-content animate__animated animate__zoomIn">
+            <div class="hero-badge trans-txt" data-ne="सोनापुरको गौरव 🙌" data-en="Pride of Sonapur 🙌">सोनापुरको गौरव 🙌</div>
+            <h1 class="hero-title trans-txt" data-ne="सशक्त युवा समाज" data-en="Empowered Youth Society">सशक्त युवा समाज</h1>
+            <p class="hero-subtitle trans-txt" data-ne="एकता • खेलकुद • प्रगति • भविष्य" data-en="Unity • Sports • Progress • Future">एकता • खेलकुद • प्रगति • भविष्य</p>
+            
+            <div style="margin-top: 40px;">
+                <a href="#agendas" class="lang-switch-btn" style="text-decoration: none; display: inline-block; padding: 15px 40px;">
+                    <span class="trans-txt" data-ne="हाम्रो बारेमा" data-en="Learn More">हाम्रो बारेमा</span>
+                </a>
+            </div>
+
+            <a href="#agendas" class="scroll-down-btn" style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: white; text-decoration: none;">
+                <i class="fas fa-chevron-down animate__animated animate__bounce animate__infinite" style="font-size: 2rem;"></i>
+            </a>
+        </div>
+    </section>
+
+    <section id="agendas" class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <span class="sub-heading trans-txt" data-ne="हाम्रो लक्ष्य" data-en="Our Mission">हाम्रो लक्ष्य</span>
+                <h2 class="main-heading trans-txt" data-ne="हाम्रा उद्देश्यहरू" data-en="Our Objectives">हाम्रा उद्देश्यहरू</h2>
+            </div>
+            <div class="agenda-grid">
+                {% for agenda in agendas %}
+                <div class="agenda-card">
+                    <div class="agenda-inner">
+                        <div class="agenda-icon"><i class="fas fa-check-circle"></i></div>
+                        <h3 class="db-trans" data-ne="{{ agenda.title }}" data-en="{{ agenda.title_en|default:agenda.title }}">{{ agenda.title }}</h3>
+                        <p class="db-trans" data-ne="{{ agenda.description }}" data-en="{{ agenda.description_en|default:agenda.description }}">{{ agenda.description }}</p>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="trans-txt text-center w-100" data-ne="कुनै उद्देश्य उपलब्ध छैन" data-en="No objectives available">कुनै उद्देश्य उपलब्ध छैन</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section id="programs" class="section-padding" style="background: var(--light-bg);">
+        <div class="container">
+            <div class="section-header">
+                <span class="sub-heading trans-txt" data-ne="गतिविधिहरू" data-en="Activities">गतिविधिहरू</span>
+                <h2 class="main-heading trans-txt" data-ne="हाम्रा कार्यक्रमहरू" data-en="Our Programs">हाम्रा कार्यक्रमहरू</h2>
+            </div>
+            <div class="program-grid">
+                {% for program in programs %}
+                <a href="{% url 'program_detail' program.pk %}" class="program-card-link {% if forloop.counter > 3 %}hidden-program{% endif %}">
+                    <div class="program-card">
+                        <div class="program-img-wrapper">
+                            {% if program.image %}
+                                <img src="{{ program.image.url }}" alt="{{ program.title }}" class="program-img">
+                            {% endif %}
+                            <div class="program-date-badge">
+                                <i class="far fa-calendar-alt"></i> {{ program.date }}
+                            </div>
+                        </div>
+                        <div class="program-content">
+                            <h3 class="db-trans" data-ne="{{ program.title }}" data-en="{{ program.title_en|default:program.title }}">{{ program.title }}</h3>
+                            <p class="db-trans" data-ne="{{ program.description|truncatewords:15 }}" data-en="{{ program.description_en|default:program.description|truncatewords:15 }}">
+                                {{ program.description|truncatewords:15 }}
+                            </p>
+                            <div style="margin-top: 20px; color: var(--primary); font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                                <span class="trans-txt" data-ne="थप विवरण" data-en="View Details">थप विवरण</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+
+            {% if programs.count > 3 %}
+            <div class="view-more-wrapper">
+                <button id="view-programs-btn" class="view-more-btn trans-txt" data-ne="सबै कार्यक्रमहरू हेर्नुहोस्" data-en="View All Programs">
+                    सबै कार्यक्रमहरू हेर्नुहोस्
+                </button>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <section id="team" class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <span class="sub-heading trans-txt" data-ne="हाम्रो परिवार" data-en="Our Family">हाम्रो परिवार</span>
+                <h2 class="main-heading trans-txt" data-ne="हाम्रो टोली" data-en="Our Team">हाम्रो टोली</h2>
+            </div>
+            <div class="team-grid">
+                {% for member in team_members %}
+                <div class="team-card-circle animate__animated animate__fadeInUp {% if forloop.counter > 6 %}hidden-team{% endif %}">
+                    <div class="team-img-circle">
+                        {% if member.image %}
+                            <img src="{{ member.image.url }}" alt="{{ member.name }}">
+                        {% endif %}
+                        <div class="team-social-overlay">
+                            {% if member.contact_number %}
+                                <a href="tel:{{ member.contact_number }}" title="Call {{ member.name }}"><i class="fas fa-phone"></i></a>
+                            {% endif %}
+                            {% if member.email %}
+                                <a href="mailto:{{ member.email }}" title="Email {{ member.name }}"><i class="fas fa-envelope"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="team-info-circle">
+                        <h3 class="db-trans" data-ne="{{ member.name }}" data-en="{{ member.name_en|default:member.name }}">{{ member.name }}</h3>
+                        <p class="db-trans" data-ne="{{ member.position }}" data-en="{{ member.position_en|default:member.position }}">{{ member.position }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if team_members.count > 6 %}
+            <div class="view-more-wrapper">
+                <button id="view-team-btn" class="view-more-btn trans-txt" data-ne="सबै टोली हेर्नुहोस्" data-en="View All Team">
+                    सबै टोली हेर्नुहोस्
+                </button>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <section id="talents" class="section-padding" style="background: var(--light-bg);">
+        <div class="container">
+            <div class="section-header">
+                <span class="sub-heading trans-txt" data-ne="स्थानीय प्रतिभा" data-en="Local Talents">स्थानीय प्रतिभा</span>
+                <h2 class="main-heading trans-txt" data-ne="हाम्रा प्रतिभाहरू" data-en="Our Talents">हाम्रा प्रतिभाहरू</h2>
+            </div>
+            <div class="program-grid"> 
+                {% for talent in talents %}
+                <div class="talent-card {% if forloop.counter > 3 %}hidden-talent{% endif %}">
+                    <div class="program-img-wrapper talent-video-container">
+                        {% if talent.video_file %}
+                        <video class="talent-video-player" controls preload="metadata" 
+                                poster="{% if talent.thumbnail %}{{ talent.thumbnail.url }}{% endif %}">
+                            <source src="{{ talent.video_file.url }}" type="video/mp4">
+                        </video>
+                        {% elif talent.video_url %}
+                        <iframe class="talent-video-player" src="{{ talent.video_url }}" frameborder="0" allowfullscreen></iframe>
+                        {% endif %}
+                    </div>
+                    <div class="program-content">
+                        <h3 class="db-trans" data-ne="{{ talent.name_ne }}" data-en="{{ talent.name_en }}">{{ talent.name_ne }}</h3>
+                        <p class="db-trans talent-bio" data-ne="{{ talent.description_ne }}" data-en="{{ talent.description_en }}">
+                            {{ talent.description_ne }}
+                        </p>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="trans-txt text-center w-100" data-ne="प्रतिभाहरू छिट्टै अपडेट हुनेछन्" data-en="Talents will be updated soon">प्रतिभाहरू छिट्टै अपडेट हुनेछन्</p>
+                {% endfor %}
+            </div>
+
+            {% if talents.count > 3 %}
+            <div class="view-more-wrapper">
+                <button id="view-more-btn" class="view-more-btn trans-txt" data-ne="थप हेर्नुहोस्" data-en="View More">
+                    थप हेर्नुहोस्
+                </button>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+</div>
+{% endblock body %}

@@ -1,0 +1,285 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ne">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}सशक्त युवा समाज||{% endblock title %}</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
+
+    <!-- favicon  -->
+<link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon_io (3)/apple-touch-icon.png' %}">
+<link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon_io (3)/favicon-32x32.png' %}">
+<link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon_io (3)/favicon-16x16.png' %}">
+<link rel="manifest" href="{% static 'images/favicon_io (3)/site.webmanifest' %}">
+<!-- favicon end  -->
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        /* CSS to hide elements initially */
+        .hidden-talent, .hidden-team, .hidden-program {
+            display: none !important;
+        }
+        .view-more-wrapper {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+        .view-more-btn {
+            padding: 12px 30px;
+            background-color: #e63946;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+        .view-more-btn:hover {
+            transform: scale(1.05);
+            background-color: #c12e3a;
+        }
+    </style>
+</head>
+
+<body class="lang-ne">
+    <header class="navbar-wrapper">
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="/" class="nav-logo">
+                    <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo-img">
+                    <div class="logo-text">
+                       <span class="club-name trans-txt" data-ne="सशक्त युवा समाज"
+                            data-en="Empowered Youth Society">सशक्त युवा समाज</span>
+                    </div>
+                </a>
+
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="/#home" class="nav-item trans-txt" data-ne="गृह पृष्ठ" data-en="Home">गृह पृष्ठ</a></li>
+                    <li><a href="/#agendas" class="nav-item trans-txt" data-ne="उद्देश्यहरू" data-en="Objectives">उद्देश्यहरू</a></li>
+                    <li><a href="/#programs" class="nav-item trans-txt" data-ne="कार्यक्रम" data-en="Programs">कार्यक्रम</a></li>
+                    <li><a href="/#team" class="nav-item trans-txt" data-ne="हाम्रो टोली" data-en="Our Team">हाम्रो टोली</a></li>
+                    <li><a href="/#talents" class="nav-item trans-txt" data-ne="प्रतिभाहरू" data-en="Talents">प्रतिभाहरू</a></li>
+                </ul>
+
+                <div class="nav-actions">
+                    <button class="lang-switch-btn" id="lang-toggle-btn" onclick="toggleLanguage()">
+                        <i class="fas fa-globe"></i>
+                        <span id="lang-label">EN</span>
+                    </button>
+                    <div class="nav-toggle" id="mobile-menu">
+                        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        {% block body %}{% endblock body %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section brand-info">
+                <img src="{% static 'images/logo.png' %}" alt="Logo" class="footer-logo">
+                <h3 class="trans-txt" data-ne="सशक्त युवा समाज" data-en="Empowered Youth Society">सशक्त युवा समाज</h3>
+                <p class="trans-txt footer-desc"
+                    data-ne="समाज परिवर्तनका लागि युवाको पाइला। हामी एकता र प्रगतिको पक्षमा छौं।"
+                    data-en="Youth steps for social change. We stand for unity and progress.">
+                    समाज परिवर्तनका लागि युवाको पाइला। हामी एकता र प्रगतिको पक्षमा छौं।
+                </p>
+                <div class="footer-socials">
+                    {% if footer.facebook_url %}
+                    <a href="{{ footer.facebook_url }}" target="_blank" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    {% endif %}
+
+                    {% if footer.tiktok_url %}
+                    <a href="{{ footer.tiktok_url }}" target="_blank" class="social-icon" aria-label="TikTok">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h4 class="footer-heading trans-txt" data-ne="द्रुत लिङ्कहरू" data-en="Quick Links">द्रुत लिङ्कहरू</h4>
+                <ul class="footer-links">
+                    <li><a href="/#home" class="trans-txt" data-ne="गृह पृष्ठ" data-en="Home">गृह पृष्ठ</a></li>
+                    <li><a href="/#agendas" class="trans-txt" data-ne="हाम्रो उद्देश्य" data-en="Objectives">हाम्रो उद्देश्य</a></li>
+                    <li><a href="/#programs" class="trans-txt" data-ne="कार्यक्रमहरू" data-en="Programs">कार्यक्रमहरू</a></li>
+                    <li><a href="/#team" class="trans-txt" data-ne="हाम्रो टोली" data-en="Our Team">हाम्रो टोली</a></li>
+                    <li><a href="/#talents" class="trans-txt" data-ne="प्रतिभाहरू " data-en="Talents">प्रतिभाहरू </a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4 class="footer-heading trans-txt" data-ne="सम्पर्क" data-en="Contact Us">सम्पर्क</h4>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <a href="tel:{{ footer.phone|default:'+977 9804016954' }}" style="color: inherit; text-decoration: none;">
+                            <span>{{ footer.phone|default:"+977 9804016954" }}</span>
+                        </a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:{{ footer.email|default:'info@empoweredyouth.org' }}" style="color: inherit; text-decoration: none;">
+                            <span>{{ footer.email|default:"info@empoweredyouth.org" }}</span>
+                        </a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span class="trans-txt" 
+                              data-ne="{{ footer.address_ne|default:'दुहबी-८, सुनसरी' }}" 
+                              data-en="{{ footer.address_en|default:'Duhabi-8, Sunsari' }}">
+                            {{ footer.address_ne|default:"दुहबी-८, सुनसरी" }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h4 class="footer-heading trans-txt" data-ne="हाम्रो स्थान" data-en="Our Location">हाम्रो स्थान</h4>
+                <div class="footer-map-wrapper">
+                    <iframe
+                        src="{{ footer.google_maps_embed_url|default:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3571.3204961521!2d87.27582537520696!3d26.477647278713063!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ef71569427e99b%3A0x67a3f80c6575196!2sDuhabi%208!5e0!3m2!1sen!2snp!4v1709123456789!5m2!1sen!2snp' }}"
+                        width="100%" height="160" style="border:0; border-radius: 15px;" allowfullscreen=""
+                        loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container footer-bottom-content">
+                <p class="trans-txt" data-ne="© २०२६ सशक्त युवा समाज | सर्वाधिकार सुरक्षित।"
+                    data-en="© 2026 Empowered Youth Society | All Rights Reserved.">© २०२६ सशक्त युवा समाज | सर्वाधिकार सुरक्षित।</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+    
+    <script>
+        // Lightbox Configuration
+        lightbox.option({
+          'resizeDuration': 200,
+          'wrapAround': true,
+          'alwaysShowNavOnTouchDevices': true,
+          'fadeDuration': 300
+        });
+
+        function applyLanguage(lang) {
+            const body = document.body;
+            const label = document.getElementById('lang-label');
+            const transElements = document.querySelectorAll('.trans-txt, .db-trans');
+
+            if (lang === 'en') {
+                body.classList.remove('lang-ne');
+                body.classList.add('lang-en');
+                label.innerText = "ने";
+                transElements.forEach(el => {
+                    const enTxt = el.getAttribute('data-en');
+                    if (enTxt && enTxt !== "None") el.innerText = enTxt;
+                });
+            } else {
+                body.classList.remove('lang-en');
+                body.classList.add('lang-ne');
+                label.innerText = "EN";
+                transElements.forEach(el => {
+                    const neTxt = el.getAttribute('data-ne');
+                    if (neTxt) el.innerText = neTxt;
+                });
+            }
+            localStorage.setItem('preferredLang', lang);
+        }
+
+        function toggleLanguage() {
+            const currentLang = localStorage.getItem('preferredLang') || 'ne';
+            const newLang = currentLang === 'ne' ? 'en' : 'ne';
+            applyLanguage(newLang);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferredLang') || 'ne';
+            applyLanguage(savedLang);
+        });
+
+        const menu = document.getElementById('mobile-menu');
+        const menuLinks = document.getElementById('nav-menu');
+        menu.onclick = () => {
+            menu.classList.toggle('is-active');
+            menuLinks.classList.toggle('active');
+        };
+
+        const sections = document.querySelectorAll("section[id]");
+        window.addEventListener("scroll", () => {
+            let scrollY = window.pageYOffset;
+            sections.forEach(current => {
+                const sectionHeight = current.offsetHeight;
+                const sectionTop = current.offsetTop - 120;
+                const sectionId = current.getAttribute("id");
+
+                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                    const targetNav = document.querySelector(".nav-menu a[href*='" + sectionId + "']");
+                    if (targetNav) {
+                        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                        targetNav.classList.add("active");
+                    }
+                }
+            });
+        });
+
+        // Video management: pause others when one plays
+        const allVideos = document.querySelectorAll('.talent-video-player');
+        allVideos.forEach(video => {
+            video.addEventListener('play', () => {
+                allVideos.forEach(otherVideo => {
+                    if (otherVideo !== video) {
+                        otherVideo.pause();
+                        otherVideo.currentTime = 0;
+                        otherVideo.load();
+                    }
+                });
+            });
+        });
+
+        // REVEAL CONTENT SCRIPT (Handles Talents, Team, and Programs)
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.id === 'view-more-btn') {
+                const hiddenTalents = document.querySelectorAll('.hidden-talent');
+                hiddenTalents.forEach(talent => {
+                    talent.classList.remove('hidden-talent');
+                    talent.classList.add('animate__animated', 'animate__fadeInUp');
+                });
+                e.target.parentElement.style.display = 'none';
+            }
+            
+            if (e.target && e.target.id === 'view-team-btn') {
+                const hiddenMembers = document.querySelectorAll('.hidden-team');
+                hiddenMembers.forEach(member => {
+                    member.classList.remove('hidden-team');
+                    member.classList.add('animate__animated', 'animate__fadeInUp');
+                });
+                e.target.parentElement.style.display = 'none';
+            }
+
+            if (e.target && e.target.id === 'view-programs-btn') {
+                const hiddenPrograms = document.querySelectorAll('.hidden-program');
+                hiddenPrograms.forEach(program => {
+                    program.classList.remove('hidden-program');
+                    program.classList.add('animate__animated', 'animate__fadeInUp');
+                });
+                e.target.parentElement.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
